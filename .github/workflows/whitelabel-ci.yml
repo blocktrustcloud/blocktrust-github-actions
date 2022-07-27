@@ -65,8 +65,6 @@ jobs:
         continue-on-error: true
         run: npm list
 
-
-
       - name: Set env
         run: |
           cp "infra/env/.env.${{env.ENVIRONMENT}}.${{env.CLIENT}}" .env
@@ -89,6 +87,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
@@ -97,20 +96,5 @@ jobs:
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.DOCKER_CONTAINER_NAME }}:${{ github.sha }}
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.DOCKER_CONTAINER_NAME }}:latest
           cache-from: type=registry,ref=${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.DOCKER_CONTAINER_NAME }}:latest
-        cache-to: type=inline
+          cache-to: type=inline
 
-#        secrets:
-#          ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
-#          ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
-
-#      - name: Azure login
-#        uses: azure/login@v1
-#        with:
-#          creds: '${{ secrets.AZURE_CREDENTIALS }}'
-#      - name: Build and push image to ACR
-#        run: |
-#          az acr build \
-#            --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.DOCKER_CONTAINER_NAME }}:${{ github.sha }} \
-#            --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.DOCKER_CONTAINER_NAME }}:latest \
-#            --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.AZURE_RESOURCE_GROUP }} .
-  
