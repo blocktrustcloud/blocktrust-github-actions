@@ -79,17 +79,26 @@ jobs:
         run: yarn run build
         continue-on-error: true
 
-      - name: Build and push image to ACR
-        uses: .github/workflows/docker-build-and-push.yml@main
+      - name: Connect to ACR
+        uses: azure/docker-login@v1
         with:
-          COMPANY: ${{ inputs.COMPANY }}
-          PROJECT: "blocktrust"
-          CLIENT: "juliens"
-          ENVIRONMENT: "dev"
-          AZURE_CONTAINER_REGISTRY: "blocktrustjuliensdevregistry"
-          AZURE_RESOURCE_GROUP: "blocktrust-juliens-dev-infra"
-          DOCKER_CONTAINER_NAME: "web-juliens"
-        secrets: inherit
+          login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: |
+            ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.DOCKER_CONTAINER_NAME }}:${{ github.sha }}
+            ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.DOCKER_CONTAINER_NAME }}:latest
+          cache-from: type=registry,ref=${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.DOCKER_CONTAINER_NAME }}:latest
+        cache-to: type=inline
+
 #        secrets:
 #          ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
 #          ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
