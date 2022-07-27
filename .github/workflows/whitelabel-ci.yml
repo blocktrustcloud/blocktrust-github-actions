@@ -26,8 +26,8 @@ on:
         required: true
 
 env:
-  CLIENT: "${{ input.CLIENT }}"
-  ENVIRONMENT: ${{ input.ENVIRONMENT }}
+  CLIENT: "${{ inputs.CLIENT }}"
+  ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
   CONTAINER_NAME: "web-${{ input.CLIENT }}"
 
 jobs:
