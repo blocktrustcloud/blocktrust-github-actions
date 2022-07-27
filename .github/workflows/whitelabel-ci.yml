@@ -89,9 +89,10 @@ jobs:
           AZURE_CONTAINER_REGISTRY: "blocktrustjuliensdevregistry"
           AZURE_RESOURCE_GROUP: "blocktrust-juliens-dev-infra"
           DOCKER_CONTAINER_NAME: "web-juliens"
-        secrets:
-          ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
-          ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
+        secrets: inherit
+#        secrets:
+#          ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
+#          ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
 
 #      - name: Azure login
 #        uses: azure/login@v1
