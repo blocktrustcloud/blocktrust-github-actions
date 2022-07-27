@@ -2,13 +2,13 @@ name: Continuous integration main
 
 on:
   workflow_call:
-#    inputs:
-#      ENVIRONMENT:
-#        required: true
-#        type: string
-#      CLIENT:
-#        required: true
-#        type: string
+    inputs:
+      ENVIRONMENT:
+        required: true
+        type: string
+      CLIENT:
+        required: true
+        type: string
 #      COMPANY:
 #        required: true
 #        type: string
@@ -25,8 +25,10 @@ on:
       AZURE_CREDENTIALS:
         required: true
 
-#env:
-#  CONTAINER_NAME: "web-${{ env.CLIENT }}"
+env:
+  CLIENT: "${{ input.CLIENT }}"
+  ENVIRONMENT: ${{ input.ENVIRONMENT }}
+  CONTAINER_NAME: "web-${{ input.CLIENT }}"
 
 jobs:
   ci:
