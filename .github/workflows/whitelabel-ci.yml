@@ -9,9 +9,9 @@ on:
       CLIENT:
         required: true
         type: string
-#      COMPANY:
-#        required: true
-#        type: string
+      COMPANY:
+        required: true
+        type: string
 #      PROJECT:
 #        required: true
 #        type: string
