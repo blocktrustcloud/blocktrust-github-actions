@@ -28,7 +28,7 @@ on:
 env:
   CLIENT: "${{ inputs.CLIENT }}"
   ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
-  CONTAINER_NAME: "web-${{ input.CLIENT }}"
+  CONTAINER_NAME: "web-${{ inputs.CLIENT }}"
 
 jobs:
   ci:
