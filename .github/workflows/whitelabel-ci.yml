@@ -2,25 +2,25 @@ name: Continuous integration main
 
 on:
   workflow_call:
-    inputs:
-      ENVIRONMENT:
-        required: true
-        type: string
-      CLIENT:
-        required: true
-        type: string
-      COMPANY:
-        required: true
-        type: string
-      PROJECT:
-        required: true
-        type: string
-      AZURE_CONTAINER_REGISTRY:
-        required: true
-        type: string
-      RESOURCE_GROUP:
-        required: true
-        type: string
+#    inputs:
+#      ENVIRONMENT:
+#        required: true
+#        type: string
+#      CLIENT:
+#        required: true
+#        type: string
+#      COMPANY:
+#        required: true
+#        type: string
+#      PROJECT:
+#        required: true
+#        type: string
+#      AZURE_CONTAINER_REGISTRY:
+#        required: true
+#        type: string
+#      RESOURCE_GROUP:
+#        required: true
+#        type: string
     secrets:
       AZURE_CREDENTIALS:
         required: true
@@ -58,7 +58,7 @@ jobs:
 
       - name: Set env
         run: |
-          cp "infra/env/.env.${{env.ENVIRONMENT}}.${{environment.CLIENT}}" .env
+          cp "infra/env/.env.${{env.ENVIRONMENT}}.${{env.CLIENT}}" .env
       - name: Install package
         run: npm install
       - name: Run test
