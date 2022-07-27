@@ -12,22 +12,26 @@ on:
       COMPANY:
         required: true
         type: string
-#      PROJECT:
-#        required: true
-#        type: string
-#      AZURE_CONTAINER_REGISTRY:
-#        required: true
-#        type: string
-#      RESOURCE_GROUP:
-#        required: true
-#        type: string
+      PROJECT:
+        required: true
+        type: string
+      AZURE_CONTAINER_REGISTRY:
+        required: true
+        type: string
+      RESOURCE_GROUP:
+        required: true
+        type: string
     secrets:
       AZURE_CREDENTIALS:
         required: true
 
 env:
-  CLIENT: "${{ inputs.CLIENT }}"
+  CLIENT: ${{ inputs.CLIENT }}
   ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
+  COMPANY: ${{ inputs.COMPANY }}
+  PROJECT: ${{ inputs.PROJECT }}
+  AZURE_CONTAINER_REGISTRY: ${{ inputs.AZURE_CONTAINER_REGISTRY }}
+  RESOURCE_GROUP: ${{ inputs.RESOURCE_GROUP }}
   CONTAINER_NAME: "web-${{ inputs.CLIENT }}"
 
 jobs:
