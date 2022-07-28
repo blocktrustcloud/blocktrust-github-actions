@@ -83,13 +83,9 @@ jobs:
           login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
-#
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v2
 
-      - name: Prepare Application
-        run: |
-          ls -al
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
       - name: Build and push
         uses: docker/build-push-action@v3
@@ -99,5 +95,5 @@ jobs:
           tags: |
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.DOCKER_CONTAINER_NAME }}:${{ github.sha }}
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.DOCKER_CONTAINER_NAME }}:latest
-#          cache-from: type=registry,ref=${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.DOCKER_CONTAINER_NAME }}:latest
-#          cache-to: type=inline
+          cache-from: type=registry,ref=${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.DOCKER_CONTAINER_NAME }}:latest
+          cache-to: type=inline
