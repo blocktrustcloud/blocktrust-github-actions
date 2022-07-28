@@ -67,12 +67,18 @@ jobs:
 
       - name: Set env
         run: |
-          cp "infra/env/.env.${{env.ENVIRONMENT}}.${{env.CLIENT}}" .env
+          cp infra/env/.env.${{env.ENVIRONMENT}}.${{env.CLIENT}} .env
+          ls
+          cat .env
 
       - name: Install package
         run: npm install
       - name: Run test
         run: npm run coverage
+      - name: Set env
+        run: |
+          ls
+          cat .env
       - name: Build
         run: npm run build
         continue-on-error: true
