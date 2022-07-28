@@ -82,7 +82,7 @@ jobs:
         with:
           login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
           username: ${{ secrets.ACR_USERNAME }}
-#          password: ${{ secrets.ACR_PASSWORD }}
+          password: ${{ secrets.ACR_PASSWORD }}
 #
 #      - name: Set up Docker Buildx
 #        uses: docker/setup-buildx-action@v2
