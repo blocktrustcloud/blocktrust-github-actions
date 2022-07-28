@@ -94,7 +94,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./blocktrust-white-label
           push: true
           tags: |
             ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.DOCKER_CONTAINER_NAME }}:${{ github.sha }}
