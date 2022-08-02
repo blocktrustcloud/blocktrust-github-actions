@@ -1,6 +1,11 @@
 name: Push app secret to kubernetes
 
 on:
+  push:
+    paths:
+      #    - '.github/workflows/dev-juliens-vendure.yml'
+      - ${{input.WORKING_DIR}}/**
+      - ${{input.WORKING_DIR}}/../env/${{input.CLIENT}}-${{input.ENVIRONMENT}}/**
   workflow_call:
     inputs:
       ENVIRONMENT:
@@ -18,10 +23,6 @@ on:
     secrets:
       AZURE_CREDENTIALS:
         required: true
-  paths:
-#    - '.github/workflows/dev-juliens-vendure.yml'
-    - ${{input.WORKING_DIR}}/**
-    - ${{input.WORKING_DIR}}/../env/${{input.CLIENT}}-${{input.ENVIRONMENT}}/**
 
 env:
   CLIENT: ${{ inputs.CLIENT }}
