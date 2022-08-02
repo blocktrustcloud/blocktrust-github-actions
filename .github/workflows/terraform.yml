@@ -1,11 +1,6 @@
 name: Push app secret to kubernetes
 
 on:
-  push:
-    paths:
-      #    - '.github/workflows/dev-juliens-vendure.yml'
-      - ${{input.WORKING_DIR}}/**
-      - ${{input.WORKING_DIR}}/../env/${{input.CLIENT}}-${{input.ENVIRONMENT}}/**
   workflow_call:
     inputs:
       ENVIRONMENT:
