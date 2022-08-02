@@ -16,9 +16,14 @@ on:
         required: true
         type: string
     secrets:
-      AZURE_CREDENTIALS:
+      ARM_CLIENT_ID:
         required: true
-
+      ARM_CLIENT_SECRET:
+        required: true
+      ARM_SUBSCRIPTION_ID:
+        required: true
+      ARM_TENANT_ID:
+        required: true
 env:
   CLIENT: ${{ inputs.CLIENT }}
   ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
