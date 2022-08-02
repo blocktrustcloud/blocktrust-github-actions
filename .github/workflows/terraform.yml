@@ -57,4 +57,4 @@ jobs:
       - name: Terraform Apply
         id: apply
         working-directory: ${{env.WORKING_DIR}}
-        run: terraform apply -var-file=./env/${{env.CLIENT}}-${{env.ENVIRONMENT}}/terraform.tfvars
+        run: terraform apply -var-file=./env/${{env.CLIENT}}-${{env.ENVIRONMENT}}/terraform.tfvars -auto-approve
