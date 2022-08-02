@@ -33,7 +33,7 @@ jobs:
       - name: Terraform Init
         id: init
         working-directory: ${{env.WORKING_DIR}}
-        run: terraform init -backend-config=../env/${{env.CLIENT}}-${{env.ENVIRONMENT}}/backend.tfvars
+        run: terraform init -backend-config=./env/${{env.CLIENT}}-${{env.ENVIRONMENT}}/backend.tfvars
 
       - name: Terraform Validate
         id: validate
@@ -43,9 +43,9 @@ jobs:
       - name: Terraform Plan
         id: plan
         working-directory: ${{env.WORKING_DIR}}
-        run: terraform plan  -var-file=../env/${{env.CLIENT}}-${{env.ENVIRONMENT}}/terraform.tfvars
+        run: terraform plan  -var-file=./env/${{env.CLIENT}}-${{env.ENVIRONMENT}}/terraform.tfvars
 
       - name: Terraform Apply
         id: apply
         working-directory: ${{env.WORKING_DIR}}
-        run: terraform apply -var-file=../env/${{env.CLIENT}}-${{env.ENVIRONMENT}}/terraform.tfvars
+        run: terraform apply -var-file=./env/${{env.CLIENT}}-${{env.ENVIRONMENT}}/terraform.tfvars
