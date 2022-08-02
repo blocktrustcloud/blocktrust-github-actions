@@ -1,0 +1,55 @@
+name: Push app secret to kubernetes
+
+on:
+  workflow_call:
+    inputs:
+      ENVIRONMENT:
+        required: true
+        type: string
+      CLIENT:
+        required: true
+        type: string
+      COMPANY:
+        required: true
+        type: string
+      WORKING_DIR:
+        required: true
+        type: string
+    secrets:
+      AZURE_CREDENTIALS:
+        required: true
+  paths:
+#    - '.github/workflows/dev-juliens-vendure.yml'
+    - ${{input.WORKING_DIR}}/**
+    - ${{input.WORKING_DIR}}/../env/${{input.CLIENT}}-${{input.ENVIRONMENT}}/**
+
+env:
+  CLIENT: ${{ inputs.CLIENT }}
+  ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
+  COMPANY: ${{ inputs.COMPANY }}
+  WORKING_DIR: ${{ inputs.WORKING_DIR }}
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Terraform Init
+        id: init
+        working-directory: ${{env.WORKING_DIR}}
+        run: terraform init -backend-config=../env/${{env.CLIENT}}-${{env.ENVIRONMENT}}/backend.tfvars
+
+      - name: Terraform Validate
+        id: validate
+        working-directory: ${{env.WORKING_DIR}}
+        run: terraform validate
+
+      - name: Terraform Plan
+        id: plan
+        working-directory: ${{env.WORKING_DIR}}
+        run: terraform plan  -var-file=../env/${{env.CLIENT}}-${{env.ENVIRONMENT}}/terraform.tfvars
+
+      - name: Terraform Apply
+        id: apply
+        working-directory: ${{env.WORKING_DIR}}
+        run: terraform apply -var-file=../env/${{env.CLIENT}}-${{env.ENVIRONMENT}}/terraform.tfvars
