@@ -48,11 +48,11 @@ jobs:
         id: validate
         working-directory: ${{env.WORKING_DIR}}
         run: terraform validate
-
-      - name: Terraform Plan
-        id: plan
-        working-directory: ${{env.WORKING_DIR}}
-        run: terraform plan  -var-file=./env/${{env.CLIENT}}-${{env.ENVIRONMENT}}/terraform.tfvars
+# TODO: create workflow for all branch
+#      - name: Terraform Plan
+#        id: plan
+#        working-directory: ${{env.WORKING_DIR}}
+#        run: terraform plan  -var-file=./env/${{env.CLIENT}}-${{env.ENVIRONMENT}}/terraform.tfvars
 
       - name: Terraform Apply
         id: apply
