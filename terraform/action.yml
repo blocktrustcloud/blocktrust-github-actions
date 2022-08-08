@@ -27,20 +27,20 @@ runs:
     - uses: actions/checkout@v3
     - shell: bash
       id: init
-      working-directory: ${{env.WORKING_DIR}}
-      run: terraform init -backend-config=./env/${{env.CLIENT}}-${{env.ENVIRONMENT}}/backend.tfvars
+      working-directory: ${{inputs.WORKING_DIR}}
+      run: terraform init -backend-config=./env/${{inputs.CLIENT}}-${{inputs.ENVIRONMENT}}/backend.tfvars
 
     - shell: bash
       id: validate
-      working-directory: ${{env.WORKING_DIR}}
+      working-directory: ${{inputs.WORKING_DIR}}
       run: terraform validate
 # TODO: create workflow for all branch
 #      - name: Terraform Plan
 #        id: plan
-#        working-directory: ${{env.WORKING_DIR}}
-#        run: terraform plan  -var-file=./env/${{env.CLIENT}}-${{env.ENVIRONMENT}}/terraform.tfvars
+#        working-directory: ${{inputs.WORKING_DIR}}
+#        run: terraform plan  -var-file=./env/${{inputs.CLIENT}}-${{inputs.ENVIRONMENT}}/terraform.tfvars
 
     - shell: bash
       id: apply
-      working-directory: ${{env.WORKING_DIR}}
-      run: terraform apply -var-file=./env/${{env.CLIENT}}-${{env.ENVIRONMENT}}/terraform.tfvars -auto-approve
+      working-directory: ${{inputs.WORKING_DIR}}
+      run: terraform apply -var-file=./env/${{inputs.CLIENT}}-${{inputs.ENVIRONMENT}}/terraform.tfvars -auto-approve
