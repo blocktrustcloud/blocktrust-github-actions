@@ -11,15 +11,6 @@ inputs:
   WORKING_DIR:
     required: true
     description: 'Which terraform root folder to work with'
-#secrets:
-#  AZURE_AD_CLIENT_ID:
-#    required: true
-#  AZURE_AD_CLIENT_SECRET:
-#    required: true
-#  AZURE_SUBSCRIPTION_ID:
-#    required: true
-#  AZURE_AD_TENANT_ID:
-#    required: true
 
 runs:
   using: "composite"

@@ -1,0 +1,32 @@
+name: Apply terraform
+description: Apply terraform module
+
+inputs:
+  ENVIRONMENT:
+    required: true
+    description: 'Which environment: dev, sit, stg, prod'
+  CLIENT:
+    required: true
+    description: 'Which client: default, vrtp ...'
+  WORKING_DIR:
+    required: true
+    description: 'Which terraform root folder to work with'
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+    - shell: bash
+      id: init
+      working-directory: ${{inputs.WORKING_DIR}}
+      run: terraform init -backend-config=./env/${{inputs.CLIENT}}-${{inputs.ENVIRONMENT}}/backend.tfvars
+
+    - shell: bash
+      id: validate
+      working-directory: ${{inputs.WORKING_DIR}}
+      run: terraform validate
+
+    - shell: bash
+      id: plan
+      working-directory: ${{inputs.WORKING_DIR}}
+      run: terraform plan  -var-file=./env/${{inputs.CLIENT}}-${{inputs.ENVIRONMENT}}/terraform.tfvars
