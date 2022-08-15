@@ -25,11 +25,6 @@ runs:
       id: validate
       working-directory: ${{inputs.WORKING_DIR}}
       run: terraform validate
-# TODO: create workflow for all branch
-#      - name: Terraform Plan
-#        id: plan
-#        working-directory: ${{inputs.WORKING_DIR}}
-#        run: terraform plan  -var-file=./env/${{inputs.CLIENT}}-${{inputs.ENVIRONMENT}}/terraform.tfvars
 
     - shell: bash
       id: apply
