@@ -37,16 +37,16 @@ runs:
     - name: Login Azure with SP and set AKS context
       uses: azure/aks-set-context@v1
       with:
-        creds: '${{ env.AZURE_CREDENTIALS }}'
-        cluster-name: ${{ env.AZURE_CLUSTER_NAME }}
-        resource-group: ${{ env.AZURE_RESOURCE_GROUP }}
+        creds: '${{ inputs.AZURE_CREDENTIALS }}'
+        cluster-name: ${{ inputs.AZURE_CLUSTER_NAME }}
+        resource-group: ${{ inputs.AZURE_RESOURCE_GROUP }}
 
     # Add environement variable as secret in k8s
-    - name: Create K8s secret from environment variable for ${{ env.PROJECT }}
+    - name: Create K8s secret from environment variable for ${{ inputs.PROJECT }}
       shell: bash
       run: |
-        kubectl delete secret ${{env.PROJECT}}-env -n=${{env.K8S_NAMESPACE}} --ignore-not-found;
-        kubectl create secret generic ${{env.PROJECT}}-env \
-          --from-env-file=${{env.REPO_WORKING_DIR}}/infra/env/.env.${{env.ENVIRONMENT}}.${{env.PROJECT}} \
-          -n=${{env.K8S_NAMESPACE}}
+        kubectl delete secret ${{inputs.PROJECT}}-env -n=${{inputs.K8S_NAMESPACE}} --ignore-not-found;
+        kubectl create secret generic ${{inputs.PROJECT}}-env \
+          --from-env-file=${{inputs.REPO_WORKING_DIR}}/infra/env/.inputs.${{inputs.ENVIRONMENT}}.${{inputs.PROJECT}} \
+          -n=${{inputs.K8S_NAMESPACE}}
 

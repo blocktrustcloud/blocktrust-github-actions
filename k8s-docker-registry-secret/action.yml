@@ -43,23 +43,23 @@ runs:
     - name: Login Azure with SP and set AKS context
       uses: azure/aks-set-context@v1
       with:
-        creds: ${{ env.AZURE_CREDENTIALS }}
-        cluster-name: ${{ env.AZURE_CLUSTER_NAME }}
-        resource-group: ${{ env.AZURE_RESOURCE_GROUP }}
+        creds: ${{ inputs.AZURE_CREDENTIALS }}
+        cluster-name: ${{ inputs.AZURE_CLUSTER_NAME }}
+        resource-group: ${{ inputs.AZURE_RESOURCE_GROUP }}
 
     # Create namespace if doesn't exist
     - name: Create namespace
       shell: bash
       run: |
-        kubectl create namespace ${{ env.K8S_NAMESPACE }} --dry-run -o json | kubectl apply -f -
+        kubectl create namespace ${{ inputs.K8S_NAMESPACE }} --dry-run -o json | kubectl apply -f -
 
     # Create imagepullsecret for Azure Container registry (ACR)
     - name: Create image pull secret for ACR
       uses: azure/k8s-actions/k8s-create-secret@master
       with:
-        container-registry-url: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io
-        container-registry-username: ${{ env.ACR_USERNAME }}
-        container-registry-password: ${{ env.ACR_PASSWORD }}
-        namespace: ${{ env.K8S_NAMESPACE }}
-        secret-name: ${{env.CLIENT}}-${{env.PROJECT}}-imagepullsecret-secret
+        container-registry-url: ${{ inputs.AZURE_CONTAINER_REGISTRY }}.azurecr.io
+        container-registry-username: ${{ inputs.ACR_USERNAME }}
+        container-registry-password: ${{ inputs.ACR_PASSWORD }}
+        namespace: ${{ inputs.K8S_NAMESPACE }}
+        secret-name: ${{inputs.CLIENT}}-${{inputs.PROJECT}}-imagepullsecret-secret
 

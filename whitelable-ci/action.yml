@@ -32,9 +32,9 @@ runs:
         cache-name: cache-node-modules
       with:
         path: ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.os }}-build-${{ inputs.cache-name }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-${{ inputs.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
     - if: ${{ steps.cache-npm.outputs.cache-hit == 'false' }}
@@ -46,7 +46,7 @@ runs:
     - name: Set env
       shell: bash
       run: |
-        cp infra/env/.env.${{env.ENVIRONMENT}}.${{env.CLIENT}} .env
+        cp infra/env/.env.${{inputs.ENVIRONMENT}}.${{inputs.CLIENT}} .env
 
     - name: Install package
       shell: bash
@@ -63,7 +63,7 @@ runs:
 #      - name: Connect to ACR
 #        uses: azure/docker-login@v1
 #        with:
-#          login-server: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io
+#          login-server: ${{ inputs.AZURE_CONTAINER_REGISTRY }}.azurecr.io
 #          username: ${{ secrets.ACR_USERNAME }}
 #          password: ${{ secrets.ACR_PASSWORD }}
 #
@@ -76,7 +76,7 @@ runs:
 #          context: .
 #          push: true
 #          tags: |
-#            ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.DOCKER_CONTAINER_NAME }}:${{ github.sha }}
-#            ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.DOCKER_CONTAINER_NAME }}:latest
-#          cache-from: type=registry,ref=${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.DOCKER_CONTAINER_NAME }}:latest
+#            ${{ inputs.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.DOCKER_CONTAINER_NAME }}:${{ github.sha }}
+#            ${{ inputs.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.DOCKER_CONTAINER_NAME }}:latest
+#          cache-from: type=registry,ref=${{ inputs.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.DOCKER_CONTAINER_NAME }}:latest
 #          cache-to: type=inline

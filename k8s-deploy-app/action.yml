@@ -43,12 +43,12 @@ runs:
     - name: Login Azure with SP and set AKS context
       uses: azure/aks-set-context@v1
       with:
-        creds: '${{ env.AZURE_CREDENTIALS }}'
-        cluster-name: ${{ env.AZURE_CLUSTER_NAME }}
-        resource-group: ${{ env.AZURE_RESOURCE_GROUP }}
+        creds: '${{ inputs.AZURE_CREDENTIALS }}'
+        cluster-name: ${{ inputs.AZURE_CLUSTER_NAME }}
+        resource-group: ${{ inputs.AZURE_RESOURCE_GROUP }}
     # Deploys application based on given manifest file
     - name: Deploys application
       shell: bash
-      working-directory: ${{env.REPO_WORKING_DIR}}/infra/k8s
+      working-directory: ${{inputs.REPO_WORKING_DIR}}/infra/k8s
       run: |
-        ./index.sh ${{ env.K8S_NAMESPACE }} ${{ env.AZURE_CONTAINER_REGISTRY }} ${{env.DOCKER_CONTAINER_NAME}} ${{ env.ENVIRONMENT}} ${{ env.DNS_SUFFIX_HOST }}
+        ./index.sh ${{ inputs.K8S_NAMESPACE }} ${{ inputs.AZURE_CONTAINER_REGISTRY }} ${{inputs.DOCKER_CONTAINER_NAME}} ${{ inputs.ENVIRONMENT}} ${{ inputs.DNS_SUFFIX_HOST }}
