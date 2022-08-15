@@ -1,0 +1,51 @@
+name: k8s-deploy-app
+description: Update deployment, service, ingress
+
+inputs:
+  ENVIRONMENT:
+    required: true
+    description: 'Which environment: dev, sit, stg, prod'
+  CLIENT:
+    required: true
+    description: 'Which client: default, vrtp ...'
+  PROJECT:
+    required: true
+    description: 'white-label, backend, infra'
+  AZURE_CONTAINER_REGISTRY:
+    required: true
+    description: 'subdomain acr'
+  AZURE_RESOURCE_GROUP:
+    required: true
+    description: 'az rg use'
+  AZURE_CLUSTER_NAME:
+    required: true
+    description: 'az cluster'
+  DOCKER_CONTAINER_NAME:
+    required: true
+    description: 'docker container name'
+  K8S_NAMESPACE:
+    required: true
+    description: 'k8s namespace'
+  REPO_WORKING_DIR:
+    required: true
+    description: 'Folder with the Dockerfile'
+  DNS_SUFFIX_HOST:
+    required: true
+    description: 'k8s DNS suffix'
+
+runs:
+  using: "composite"
+  steps:
+    # Set the target Azure Kubernetes Service (AKS) cluster.
+    - name: Login Azure with SP and set AKS context
+      uses: azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: ${{ env.AZURE_CLUSTER_NAME }}
+        resource-group: ${{ env.AZURE_RESOURCE_GROUP }}
+    # Deploys application based on given manifest file
+    - name: Deploys application
+      shell: bash
+      working-directory: ${{env.REPO_WORKING_DIR}}/infra/k8s
+      run: |
+        ./index.sh ${{ env.K8S_NAMESPACE }} ${{ env.AZURE_CONTAINER_REGISTRY }} ${{env.DOCKER_CONTAINER_NAME}} ${{ env.ENVIRONMENT}} ${{ env.DNS_SUFFIX_HOST }}

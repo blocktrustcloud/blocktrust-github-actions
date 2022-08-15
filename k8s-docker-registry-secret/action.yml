@@ -1,0 +1,57 @@
+name: Push docker registry secret to kubernetes
+description: Apply terraform module
+
+inputs:
+  ENVIRONMENT:
+    required: true
+    description: 'Which environment: dev, sit, stg, prod'
+  CLIENT:
+    required: true
+    description: 'Which client: default, vrtp ...'
+  PROJECT:
+    required: true
+    description: 'white-label, backend, infra'
+  AZURE_CONTAINER_REGISTRY:
+    required: true
+    description: 'subdomain acr'
+  AZURE_RESOURCE_GROUP:
+    required: true
+    description: 'az rg use'
+  AZURE_CLUSTER_NAME:
+    required: true
+    description: 'az cluster'
+  DOCKER_CONTAINER_NAME:
+    required: true
+    description: 'docker container name'
+  K8S_NAMESPACE:
+    required: true
+    description: 'k8s namespace'
+
+runs:
+  using: "composite"
+  steps:
+    # Set the target Azure Kubernetes Service (AKS) cluster.
+    - name: Login Azure with SP and set AKS context
+      shell: bash
+      uses: azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: ${{ env.AZURE_CLUSTER_NAME }}
+        resource-group: ${{ env.AZURE_RESOURCE_GROUP }}
+
+    # Create namespace if doesn't exist
+    - name: Create namespace
+      shell: bash
+      run: |
+        kubectl create namespace ${{ env.K8S_NAMESPACE }} --dry-run -o json | kubectl apply -f -
+
+    # Create imagepullsecret for Azure Container registry (ACR)
+    - name: Create image pull secret for ACR
+      uses: azure/k8s-actions/k8s-create-secret@master
+      with:
+        container-registry-url: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io
+        container-registry-username: ${{ secrets.ACR_USERNAME }}
+        container-registry-password: ${{ secrets.ACR_PASSWORD }}
+        namespace: ${{ env.K8S_NAMESPACE }}
+        secret-name: ${{env.CLIENT}}-${{env.PROJECT}}-imagepullsecret-secret
+

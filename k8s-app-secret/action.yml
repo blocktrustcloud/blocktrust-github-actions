@@ -1,0 +1,49 @@
+name: k8s-app-secret
+description: Push app secret to kubernetes
+
+inputs:
+  ENVIRONMENT:
+    required: true
+    description: 'Which environment: dev, sit, stg, prod'
+  CLIENT:
+    required: true
+    description: 'Which client: default, vrtp ...'
+  PROJECT:
+    required: true
+    description: 'white-label, backend, infra'
+  AZURE_RESOURCE_GROUP:
+    required: true
+    description: 'az rg use'
+  AZURE_CLUSTER_NAME:
+    required: true
+    description: 'az cluster'
+  DOCKER_CONTAINER_NAME:
+    required: true
+    description: 'docker container name'
+  K8S_NAMESPACE:
+    required: true
+    description: 'k8s namespace'
+  REPO_WORKING_DIR:
+    required: true
+    description: 'Folder with the Dockerfile'
+
+runs:
+  using: "composite"
+  steps:
+  # Set the target Azure Kubernetes Service (AKS) cluster.
+    - name: Login Azure with SP and set AKS context
+      uses: azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: ${{ env.AZURE_CLUSTER_NAME }}
+        resource-group: ${{ env.AZURE_RESOURCE_GROUP }}
+
+    # Add environement variable as secret in k8s
+    - name: Create K8s secret from environment variable for ${{ env.PROJECT }}
+      shell: bash
+      run: |
+        kubectl delete secret ${{env.PROJECT}}-env -n=${{env.K8S_NAMESPACE}} --ignore-not-found;
+        kubectl create secret generic ${{env.PROJECT}}-env \
+          --from-env-file=${{env.REPO_WORKING_DIR}}/infra/env/.env.${{env.ENVIRONMENT}}.${{env.PROJECT}} \
+          -n=${{env.K8S_NAMESPACE}}
+
