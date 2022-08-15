@@ -42,7 +42,7 @@ runs:
     - name: Connect to ACR
       uses: azure/docker-login@v1
       with:
-        login-server: ${{ inputs.REGISTRY_NAME }}.azurecr.io
+        login-server: ${{ inputs.AZURE_CONTAINER_REGISTRY }}.azurecr.io
         username: ${{ inputs.ACR_USERNAME }}
         password: ${{ inputs.ACR_PASSWORD }}
 
