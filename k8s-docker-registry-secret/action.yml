@@ -41,7 +41,6 @@ runs:
   steps:
     # Set the target Azure Kubernetes Service (AKS) cluster.
     - name: Login Azure with SP and set AKS context
-      shell: bash
       uses: azure/aks-set-context@v1
       with:
         creds: '${{ env.AZURE_CREDENTIALS }}'
