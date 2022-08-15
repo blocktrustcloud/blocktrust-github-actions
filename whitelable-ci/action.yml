@@ -38,21 +38,26 @@ runs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
     - if: ${{ steps.cache-npm.outputs.cache-hit == 'false' }}
+      shell: bash
       name: List the state of node modules
       continue-on-error: true
       run: npm list
 
     - name: Set env
+      shell: bash
       run: |
         cp infra/env/.env.${{env.ENVIRONMENT}}.${{env.CLIENT}} .env
 
     - name: Install package
+      shell: bash
       run: npm install
 
     - name: Run test
+      shell: bash
       run: npm run coverage
 
     - name: Build
+      shell: bash
       run: npm run build
 
 #      - name: Connect to ACR
