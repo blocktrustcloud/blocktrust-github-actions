@@ -29,6 +29,12 @@ inputs:
   REPO_WORKING_DIR:
     required: true
     description: 'Folder with the Dockerfile'
+  ACR_USERNAME:
+    required: true
+    description: 'ACR username'
+  ACR_PASSWORD:
+    required: true
+    description: 'ACR password'
 
 runs:
   using: "composite"
@@ -37,8 +43,8 @@ runs:
       uses: azure/docker-login@v1
       with:
         login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
-        username: ${{ secrets.ACR_USERNAME }}
-        password: ${{ secrets.ACR_PASSWORD }}
+        username: ${{ env.ACR_USERNAME }}
+        password: ${{ env.ACR_PASSWORD }}
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2

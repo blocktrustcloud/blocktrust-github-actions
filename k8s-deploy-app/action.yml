@@ -32,6 +32,9 @@ inputs:
   DNS_SUFFIX_HOST:
     required: true
     description: 'k8s DNS suffix'
+  AZURE_CREDENTIALS:
+    required: true
+    description: 'Az credential'
 
 runs:
   using: "composite"

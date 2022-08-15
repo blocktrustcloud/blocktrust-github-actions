@@ -26,6 +26,15 @@ inputs:
   K8S_NAMESPACE:
     required: true
     description: 'k8s namespace'
+  AZURE_CREDENTIALS:
+    required: true
+    description: 'Az credential'
+  ACR_USERNAME:
+    required: true
+    description: 'ACR username'
+  ACR_PASSWORD:
+    required: true
+    description: 'ACR password'
 
 runs:
   using: "composite"
@@ -35,7 +44,7 @@ runs:
       shell: bash
       uses: azure/aks-set-context@v1
       with:
-        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        creds: '${{ env.AZURE_CREDENTIALS }}'
         cluster-name: ${{ env.AZURE_CLUSTER_NAME }}
         resource-group: ${{ env.AZURE_RESOURCE_GROUP }}
 
@@ -50,8 +59,8 @@ runs:
       uses: azure/k8s-actions/k8s-create-secret@master
       with:
         container-registry-url: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io
-        container-registry-username: ${{ secrets.ACR_USERNAME }}
-        container-registry-password: ${{ secrets.ACR_PASSWORD }}
+        container-registry-username: ${{ env.ACR_USERNAME }}
+        container-registry-password: ${{ env.ACR_PASSWORD }}
         namespace: ${{ env.K8S_NAMESPACE }}
         secret-name: ${{env.CLIENT}}-${{env.PROJECT}}-imagepullsecret-secret
 
