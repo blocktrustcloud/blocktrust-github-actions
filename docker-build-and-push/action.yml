@@ -57,5 +57,5 @@ runs:
         tags: |
           ${{ inputs.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.DOCKER_CONTAINER_NAME }}:${{ github.sha }}
           ${{ inputs.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.DOCKER_CONTAINER_NAME }}:latest
-#        cache-from: type=registry,ref=${{ inputs.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.DOCKER_CONTAINER_NAME }}:latest
-#        cache-to: type=inline
+        cache-from: type=registry,ref=${{ inputs.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.DOCKER_CONTAINER_NAME }}:latest
+        cache-to: type=inline
