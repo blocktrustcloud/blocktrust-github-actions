@@ -37,7 +37,7 @@ runs:
     - name: Login Azure with SP and set AKS context
       uses: azure/aks-set-context@v1
       with:
-        creds: '${{ inputs.AZURE_CREDENTIALS }}'
+        creds: ${{ inputs.AZURE_CREDENTIALS }}
         cluster-name: ${{ inputs.AZURE_CLUSTER_NAME }}
         resource-group: ${{ inputs.AZURE_RESOURCE_GROUP }}
 
