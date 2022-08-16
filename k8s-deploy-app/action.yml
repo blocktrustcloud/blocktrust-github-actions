@@ -51,4 +51,5 @@ runs:
       shell: bash
       working-directory: ${{inputs.REPO_WORKING_DIR}}/infra/k8s
       run: |
-        ./index.sh ${{ inputs.K8S_NAMESPACE }} ${{ inputs.AZURE_CONTAINER_REGISTRY }} ${{inputs.DOCKER_CONTAINER_NAME}} ${{ inputs.ENVIRONMENT}} ${{ inputs.DNS_SUFFIX_HOST }}
+        ./index.sh ${{ inputs.K8S_NAMESPACE }} ${{ inputs.AZURE_CONTAINER_REGISTRY }} ${{inputs.DOCKER_CONTAINER_NAME}} \
+          ${{ inputs.ENVIRONMENT}} ${{ inputs.DNS_SUFFIX_HOST }} ${{ inputs.PROJECT }} ${{ inputs.CLIENT }}
