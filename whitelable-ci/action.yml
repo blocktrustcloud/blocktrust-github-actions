@@ -52,31 +52,14 @@ runs:
       shell: bash
       run: npm install
 
-#    - name: Run test
-#      shell: bash
-#      run: npm run coverage
+    - name: Run test
+      shell: bash
+      run: npm run coverage
+      
+    - name: Run test
+      shell: bash
+      run: npm run coverage
 
     - name: Build
       shell: bash
       run: npm run build
-
-#      - name: Connect to ACR
-#        uses: azure/docker-login@v1
-#        with:
-#          login-server: ${{ inputs.AZURE_CONTAINER_REGISTRY }}.azurecr.io
-#          username: ${{ secrets.ACR_USERNAME }}
-#          password: ${{ secrets.ACR_PASSWORD }}
-#
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v2
-#
-#      - name: Build and push
-#        uses: docker/build-push-action@v3
-#        with:
-#          context: .
-#          push: true
-#          tags: |
-#            ${{ inputs.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.DOCKER_CONTAINER_NAME }}:${{ github.sha }}
-#            ${{ inputs.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.DOCKER_CONTAINER_NAME }}:latest
-#          cache-from: type=registry,ref=${{ inputs.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ inputs.DOCKER_CONTAINER_NAME }}:latest
-#          cache-to: type=inline
