@@ -43,8 +43,14 @@ runs:
     - name: Sops Binary Installer
       uses: mdgreenwald/mozilla-sops-action@v1.2.0
     - shell: bash
-      id: init
+      name: Decrypt files
+      working-directory: ${{inputs.WORKING_DIR}}
+      run: |
+        cd ./infra/env/${{inputs.CLIENT}}-${{inputs.ENVIRONMENT}}
+        ./decrypt.sh
+        ls
+    - shell: bash
+      name: Decrypt files
       working-directory: ${{inputs.WORKING_DIR}}
       run: |
         ls
-        sops -v
