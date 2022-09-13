@@ -24,9 +24,9 @@ inputs:
 #  K8S_NAMESPACE:
 #    required: true
 #    description: 'k8s namespace'
-  REPO_WORKING_DIR:
+  WORKING_DIR:
     required: true
-    description: 'Folder with the Dockerfile'
+    description: 'File with script'
   AZURE_CREDENTIALS:
     required: true
     description: 'Az credential'
@@ -46,8 +46,9 @@ runs:
       name: Decrypt files
       working-directory: ${{inputs.WORKING_DIR}}
       run: |
-        ./decrypt.sh
         ls
+        pwd
+        ./decrypt.sh
     - shell: bash
       name: Decrypt files
       working-directory: ${{inputs.WORKING_DIR}}
