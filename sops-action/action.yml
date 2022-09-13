@@ -46,7 +46,6 @@ runs:
       name: Decrypt files
       working-directory: ${{inputs.WORKING_DIR}}
       run: |
-        cd ./infra/env/${{inputs.CLIENT}}-${{inputs.ENVIRONMENT}}
         ./decrypt.sh
         ls
     - shell: bash
