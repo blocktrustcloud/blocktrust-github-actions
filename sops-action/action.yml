@@ -46,6 +46,6 @@ runs:
       id: init
       working-directory: ${{inputs.WORKING_DIR}}
       run: |
-#        apt install sops
+        apt install sops
         ls
         sops -v
