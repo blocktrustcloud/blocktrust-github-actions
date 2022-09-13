@@ -44,6 +44,7 @@ runs:
       id: init
       working-directory: ${{inputs.WORKING_DIR}}
       run: |
-        go get -u go.mozilla.org/sops/cmd/sops
+#        go get -u go.mozilla.org/sops/cmd/sops
+        apt install sops
         ls
         sops -v
