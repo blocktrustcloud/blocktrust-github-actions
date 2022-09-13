@@ -36,15 +36,16 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v3
-    - name: Set up Go 1.18
-      uses: actions/setup-go@v1
-      with:
-        go-version: 1.18
+#    - name: Set up Go 1.18
+#      uses: actions/setup-go@v1
+#      with:
+#        go-version: 1.18
+    - name: Sops Binary Installer
+      uses: mdgreenwald/mozilla-sops-action@v1.2.0
     - shell: bash
       id: init
       working-directory: ${{inputs.WORKING_DIR}}
       run: |
-#        go get -u go.mozilla.org/sops/cmd/sops
         apt install sops
         ls
         sops -v
