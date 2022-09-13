@@ -1,14 +1,23 @@
 name: 'Decrypt SOPS Secrets'
 description: 'Run sops to decrypt secrets'
-inputs:
-  SECRETS_DIRECTORY:
-    description: 'The directory that contains sops encrypted secrets'
-    required: true
-runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.SECRETS_DIRECTORY }}
+
 branding:
   icon: unlock
   color: red
+
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+    - name: Set up Go 1.18
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.18
+    - shell: bash
+      id: init
+      working-directory: ${{inputs.WORKING_DIR}}
+      run: |
+        go get -u go.mozilla.org/sops/cmd/sops
+        ls
+        sops -v
