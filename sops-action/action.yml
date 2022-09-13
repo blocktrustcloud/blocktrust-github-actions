@@ -5,6 +5,32 @@ branding:
   icon: unlock
   color: red
 
+inputs:
+  ENVIRONMENT:
+    required: true
+    description: 'Which environment: dev, sit, stg, prod'
+  CLIENT:
+    required: true
+    description: 'Which client: default, vrtp ...'
+  PROJECT:
+    required: true
+    description: 'white-label, backend, infra'
+#  AZURE_RESOURCE_GROUP:
+#    required: true
+#    description: 'az rg use'
+#  AZURE_CLUSTER_NAME:
+#    required: true
+#    description: 'az cluster'
+#  K8S_NAMESPACE:
+#    required: true
+#    description: 'k8s namespace'
+  REPO_WORKING_DIR:
+    required: true
+    description: 'Folder with the Dockerfile'
+  AZURE_CREDENTIALS:
+    required: true
+    description: 'Az credential'
+
 
 runs:
   using: "composite"
