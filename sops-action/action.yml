@@ -31,7 +31,7 @@ runs:
       uses: mdgreenwald/mozilla-sops-action@v1.2.0
     - uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        creds: ${{ inputs.AZURE_CREDENTIALS }}
     - shell: bash
       name: Decrypt files
       working-directory: ${{inputs.WORKING_DIR}}
