@@ -37,8 +37,4 @@ runs:
       working-directory: ${{inputs.WORKING_DIR}}
       run: |
         ./decrypt.sh  ${{inputs.ENVIRONMENT}} ${{inputs.CLIENT}}
-    - shell: bash
-      name: Decrypt files
-      working-directory: ${{inputs.WORKING_DIR}}
-      run: |
         ls -al

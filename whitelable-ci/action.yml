@@ -46,6 +46,8 @@ runs:
     - name: Set env
       shell: bash
       run: |
+        pwd
+        ls -al
         cp infra/env/.env.${{inputs.ENVIRONMENT}}.${{inputs.CLIENT}} .env
 
     - name: Install package
