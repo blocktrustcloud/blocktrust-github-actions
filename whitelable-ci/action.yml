@@ -48,7 +48,9 @@ runs:
       run: |
         pwd
         ls -al
-        cp infra/env/.env.${{inputs.ENVIRONMENT}}.${{inputs.CLIENT}} .env
+        ls -al ./infra
+        ls -al ./infra/env
+        cp ./infra/env/.env.${{inputs.ENVIRONMENT}}.${{inputs.CLIENT}} .env
 
     - name: Install package
       shell: bash
