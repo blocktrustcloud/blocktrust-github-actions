@@ -41,4 +41,4 @@ runs:
       name: Decrypt files
       working-directory: ${{inputs.WORKING_DIR}}
       run: |
-        ls
+        ls -al
