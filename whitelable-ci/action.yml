@@ -55,13 +55,13 @@ runs:
       shell: bash
       run: npm install
 
-    - name: Run test
-      shell: bash
-      run: npm run coverage
+    # - name: Run test
+    #   shell: bash
+    #   run: npm run coverage
       
-    - name: Run test
-      shell: bash
-      run: npm run coverage
+    # - name: Run test
+    #   shell: bash
+    #   run: npm run coverage
 
     - name: Build
       shell: bash
