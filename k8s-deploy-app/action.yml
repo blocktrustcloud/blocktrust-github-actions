@@ -61,7 +61,7 @@ runs:
           ${{ inputs.ENVIRONMENT}} ${{ inputs.DNS_HOST }} ${{ inputs.PROJECT }} ${{ inputs.CLIENT }} ${{ inputs.ADMIN_PORTAL_HOST }} ${{ inputs.VENDURE_HOST }}
 
     - name: Deploys autoscaler
-      if: ${{ github.event.inputs.ENVIRONMENT == 'prod' && github.event.inputs.CLIENT == 'vrtp' }}
+      if: inputs.ENVIRONMENT == 'prod' && inputs.CLIENT == 'vrtp'
       shell: bash
       working-directory: ${{inputs.REPO_WORKING_DIR}}/infra/k8s
       run: |
